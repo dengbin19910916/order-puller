@@ -1,0 +1,63 @@
+spring:
+  application:
+    name: @project.artifactId@
+  profiles:
+    active: qa
+  liquibase:
+    enabled: false
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  cache:
+    type: caffeine
+    caffeine:
+      spec:
+info:
+  version: @project.version@
+server:
+  port: 8081
+  http2:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+---
+spring:
+  profiles: dev
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  jackson:
+    serialization:
+      indent_output: true
+  liquibase:
+    enabled: false
+---
+spring:
+  profiles: qa
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/order?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  jackson:
+    serialization:
+      indent_output: true
+  liquibase:
+    enabled: false
+job:
+  pull:
+    job-identity: order-pull-job-tmall
+    time-interval: 5
+    first-time: 2018-01-01T00:00:00
