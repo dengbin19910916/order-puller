@@ -1,6 +1,8 @@
 package com.willowleaf.orderpull.core;
 
 import com.willowleaf.orderpull.core.data.*;
+import com.willowleaf.orderpull.core.model.OperationLog;
+import com.willowleaf.orderpull.core.model.Order;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,13 +14,13 @@ import java.util.List;
  * 由子类实现如何拉取订单报文。
  *
  * @author dengb
- * @see OrderPuller#pull(Timer)  拉取订单报文
+ * @see OrderPuller#pull(TimeInterval) 拉取订单报文
  */
 @Getter
 public abstract class OrderPuller {
 
     @Autowired
-    protected Timer timer;
+    protected TimeInterval timeInterval;
     @Autowired
     protected OrderRepository orderRepository;
     @Autowired
@@ -33,13 +35,13 @@ public abstract class OrderPuller {
      */
     @Transactional
     public List<Order> pullAndSave() {
-        List<Order> orders = pull(timer);
-        Operation operation = new Operation(timer.getEndTime(), orders);
-        operationRepository.save(operation);
+        List<Order> orders = pull(timeInterval);
+        OperationLog operationLog = new OperationLog(timeInterval.getEndTime(), orders);
+        operationRepository.save(operationLog);
 
         if (orders != null && orders.size() > 0) {
             orders.forEach(order -> {
-                order.setOperation(operation);
+                order.setOperationLog(operationLog);
                 orderRepository.save(order);
 
                 order.getGoods().forEach(goods -> {
@@ -54,8 +56,8 @@ public abstract class OrderPuller {
     /**
      * 拉取平台的订单报文数据。
      *
-     * @param timer 定时器
+     * @param timeInterval 定时器
      * @return 订单报文列表
      */
-    protected abstract List<Order> pull(Timer timer);
+    protected abstract List<Order> pull(TimeInterval timeInterval);
 }

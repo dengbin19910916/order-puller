@@ -1,8 +1,7 @@
 package com.willowleaf.orderpull.core;
 
-import com.willowleaf.orderpull.core.data.Order;
+import com.willowleaf.orderpull.core.model.Order;
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,14 +16,13 @@ public class OrderPusher {
 
     private final AmqpTemplate amqpTemplate;
 
-    @Autowired
     public OrderPusher(AmqpTemplate amqpTemplate) {
         this.amqpTemplate = amqpTemplate;
     }
 
     void push(List<Order> orders) {
         if (orders.size() > 0) {
-            amqpTemplate.convertAndSend(orders);
+            amqpTemplate.convertAndSend("order", orders);
         }
     }
 }

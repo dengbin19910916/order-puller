@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
  *
  * @author dengb
  */
-public interface Timer {
+public interface TimeInterval {
 
     /**
      * 返回时间区间的前端点。

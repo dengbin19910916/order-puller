@@ -2,7 +2,6 @@ package com.willowleaf.orderpull.core;
 
 import com.willowleaf.orderpull.core.data.OperationRepository;
 import org.quartz.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,16 +20,21 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class JobAutoConfiguration {
 
     private final JobProperties properties;
+    private final OrderPuller puller;
+    private final OrderPusher pusher;
 
-    @Autowired
-    public JobAutoConfiguration(JobProperties properties) {
+    public JobAutoConfiguration(JobProperties properties,
+                                OrderPuller puller,
+                                OrderPusher pusher) {
         this.properties = properties;
+        this.puller = puller;
+        this.pusher = pusher;
     }
 
     @Bean
     @ConditionalOnMissingBean(QuartzJobBean.class)
     public QuartzJobBean quartzJob() {
-        return new OrderPullJob();
+        return new OrderPullJob(puller, pusher);
     }
 
     @Bean
@@ -54,14 +58,8 @@ public class JobAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean(OrderPuller.class)
-    public OrderPuller orderPuller() {
-        return new TestOrderPuller();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(Timer.class)
-    public Timer timer(OperationRepository operationRepository, JobProperties jobProperties) {
-        return new JdbcIntervalTimer(operationRepository, jobProperties);
+    @ConditionalOnMissingBean(TimeInterval.class)
+    public TimeInterval timer(OperationRepository operationRepository, JobProperties jobProperties) {
+        return new JdbcIntervalTimeInterval(operationRepository, jobProperties);
     }
 }

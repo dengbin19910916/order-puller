@@ -1,5 +1,6 @@
-package com.willowleaf.orderpull.core.data;
+package com.willowleaf.orderpull.core.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,7 +16,6 @@ import java.math.BigDecimal;
 @Entity
 public class Goods implements Serializable {
 
-    private static final long serialVersionUID = -2272867488265027683L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,5 +31,6 @@ public class Goods implements Serializable {
      * 所属订单。
      */
     @ManyToOne
+    @JsonIgnore
     private Order order;
 }

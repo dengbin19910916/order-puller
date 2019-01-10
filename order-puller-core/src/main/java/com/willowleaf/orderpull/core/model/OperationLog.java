@@ -1,4 +1,4 @@
-package com.willowleaf.orderpull.core.data;
+package com.willowleaf.orderpull.core.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +16,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Entity
-public class Operation implements Serializable {
+public class OperationLog implements Serializable {
 
-    private static final long serialVersionUID = 4145141843018974396L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,10 +33,10 @@ public class Operation implements Serializable {
     /**
      * 拉取的订单报文。
      */
-    @OneToMany(mappedBy = "operation")
+    @OneToMany(mappedBy = "operationLog")
     private List<Order> orders;
 
-    public Operation(LocalDateTime operationTime, List<Order> orders) {
+    public OperationLog(LocalDateTime operationTime, List<Order> orders) {
         this.operationTime = operationTime;
         this.count = orders == null ? 0 : orders.size();
         this.orders = orders;
