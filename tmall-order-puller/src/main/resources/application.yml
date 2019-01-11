@@ -6,10 +6,6 @@ spring:
   liquibase:
     enabled: false
     change-log: classpath:/db/changelog/db.changelog-master.xml
-  cache:
-    type: caffeine
-    caffeine:
-      spec:
 info:
   version: @project.version@
 server:
@@ -21,6 +17,10 @@ management:
     web:
       exposure:
         include: "*"
+job:
+  pull:
+    job-identity: order-pull-job-tmall
+    start-time: 2019-01-01T00:00:00
 ---
 spring:
   profiles: dev
@@ -40,8 +40,6 @@ spring:
     enabled: false
 job:
   pull:
-    job-identity: order-pull-job-tmall
-    start-time: 2019-01-01T00:00:00
     time-interval: 5
 ---
 spring:
@@ -63,6 +61,4 @@ spring:
     enabled: false
 job:
   pull:
-    job-identity: order-pull-job-tmall
-    start-time: 2019-01-01T00:00:00
     time-interval: 5

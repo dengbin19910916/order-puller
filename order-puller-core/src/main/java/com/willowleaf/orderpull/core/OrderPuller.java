@@ -37,15 +37,12 @@ public abstract class OrderPuller {
     @Transactional
     public List<Order> pullAndSave() {
         List<Order> orders = pull(timeInterval);
-        OperationLog operationLog = new OperationLog(timeInterval.getEndTime(), getPlatform());
+        OperationLog operationLog = new OperationLog(timeInterval.getEndTime(getPlatform()), getPlatform());
         operationRepository.save(operationLog);
 
         if (orders != null && orders.size() > 0) {
             orders.forEach(order -> {
-                order.getGoods().forEach(goods -> {
-                    goodsRepository.save(goods);
-                });
-
+                order.getGoods().forEach(goods -> goodsRepository.save(goods));
                 orderRepository.save(order);
             });
         }

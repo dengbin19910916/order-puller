@@ -1,5 +1,7 @@
 package com.willowleaf.orderpull.core;
 
+import com.willowleaf.orderpull.core.model.Platform;
+
 import java.time.LocalDateTime;
 
 /**
@@ -15,12 +17,12 @@ public interface TimeInterval {
      *
      * @return 开始时间，包含
      */
-    LocalDateTime getStartTime();
+    LocalDateTime getStartTime(Platform platform);
 
     /**
      * 返回时间区间的后端点。
      *
      * @return 结束时间，不包含
      */
-    LocalDateTime getEndTime();
+    LocalDateTime getEndTime(Platform platform);
 }
