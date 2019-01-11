@@ -7,6 +7,7 @@ import com.willowleaf.orderpull.core.model.Order;
 import com.willowleaf.orderpull.core.model.Platform;
 import org.springframework.stereotype.Component;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +17,8 @@ public class VipOrderPuller extends OrderPuller {
 
     @Override
     protected List<Order> pull(TimeInterval timeInterval) {
-        System.out.println("拉取唯品会订单，开始时间：" + timeInterval.getStartTime(getPlatform()) + "，结束时间：" + timeInterval.getEndTime(getPlatform()) + "。");
+        System.out.println("拉取唯品会订单，开始时间：" + timeInterval.getStartTime(getPlatform()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                + "，结束时间：" + timeInterval.getEndTime(getPlatform()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "。");
         Order order1 = new Order();
         order1.setId(1000000001L);
         Goods goods1 = new Goods();
