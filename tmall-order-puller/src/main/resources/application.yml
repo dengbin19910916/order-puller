@@ -32,12 +32,17 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
   jackson:
     serialization:
       indent_output: true
   liquibase:
     enabled: false
+job:
+  pull:
+    job-identity: order-pull-job-tmall
+    start-time: 2019-01-01T00:00:00
+    time-interval: 5
 ---
 spring:
   profiles: qa
@@ -59,4 +64,5 @@ spring:
 job:
   pull:
     job-identity: order-pull-job-tmall
-    start-time: 2018-10-01T00:00:00
+    start-time: 2019-01-01T00:00:00
+    time-interval: 5

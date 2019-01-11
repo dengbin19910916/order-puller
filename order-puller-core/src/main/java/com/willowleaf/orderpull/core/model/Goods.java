@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 public class Goods implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     /**
      * 商品名称。

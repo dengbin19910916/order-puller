@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.willowleaf.orderpull.core.JobAutoConfiguration.ORDER_QUEUE_NAME;
+
 /**
  * 将标准订单推送至RabbitMQ。
  *
@@ -22,7 +24,7 @@ public class OrderPusher {
 
     void push(List<Order> orders) {
         if (orders.size() > 0) {
-            amqpTemplate.convertAndSend("order", orders);
+            amqpTemplate.convertAndSend(ORDER_QUEUE_NAME, orders);
         }
     }
 }

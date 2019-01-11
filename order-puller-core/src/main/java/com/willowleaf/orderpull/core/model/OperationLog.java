@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * 拉取操作的信息。
@@ -26,19 +25,8 @@ public class OperationLog implements Serializable {
      */
     @Column(nullable = false)
     private LocalDateTime operationTime;
-    /**
-     * 拉取的订单总数。
-     */
-    private int count;
-    /**
-     * 拉取的订单报文。
-     */
-    @OneToMany(mappedBy = "operationLog")
-    private List<Order> orders;
 
-    public OperationLog(LocalDateTime operationTime, List<Order> orders) {
+    public OperationLog(LocalDateTime operationTime) {
         this.operationTime = operationTime;
-        this.count = orders == null ? 0 : orders.size();
-        this.orders = orders;
     }
 }

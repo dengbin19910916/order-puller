@@ -1,6 +1,5 @@
 package com.willowleaf.orderpull.core.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,13 +17,8 @@ import java.util.List;
 public class Order implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany(mappedBy = "order")
     private List<Goods> goods;
-
-    @ManyToOne
-    @JsonIgnore
-    private OperationLog operationLog;
 }

@@ -2,6 +2,7 @@ package com.willowleaf.orderpull.core;
 
 import com.willowleaf.orderpull.core.data.OperationRepository;
 import org.quartz.*;
+import org.springframework.amqp.core.Queue;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -62,4 +63,11 @@ public class JobAutoConfiguration {
     public TimeInterval timer(OperationRepository operationRepository, JobProperties jobProperties) {
         return new JdbcIntervalTimeInterval(operationRepository, jobProperties);
     }
+
+    @Bean
+    public Queue queue() {
+        return new Queue(ORDER_QUEUE_NAME, true);
+    }
+
+    static final String ORDER_QUEUE_NAME = "order";
 }
