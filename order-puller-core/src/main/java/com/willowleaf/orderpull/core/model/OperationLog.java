@@ -26,7 +26,11 @@ public class OperationLog implements Serializable {
     @Column(nullable = false)
     private LocalDateTime operationTime;
 
-    public OperationLog(LocalDateTime operationTime) {
+    @Enumerated
+    private Platform platform;
+
+    public OperationLog(LocalDateTime operationTime, Platform platform) {
         this.operationTime = operationTime;
+        this.platform = platform;
     }
 }

@@ -4,6 +4,7 @@ import com.willowleaf.orderpull.core.OrderPuller;
 import com.willowleaf.orderpull.core.TimeInterval;
 import com.willowleaf.orderpull.core.model.Goods;
 import com.willowleaf.orderpull.core.model.Order;
+import com.willowleaf.orderpull.core.model.Platform;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -29,5 +30,10 @@ public class TmallOrderPuller extends OrderPuller {
         order2.setGoods(Collections.singletonList(goods2));
 
         return Arrays.asList(order1, order2);
+    }
+
+    @Override
+    protected Platform getPlatform() {
+        return Platform.ALIBABA;
     }
 }
