@@ -34,6 +34,6 @@ public class JdOrderPuller extends OrderPuller {
 
     @Override
     protected Platform getPlatform() {
-        return Platform.ALIBABA;
+        return Platform.JD;
     }
 }
