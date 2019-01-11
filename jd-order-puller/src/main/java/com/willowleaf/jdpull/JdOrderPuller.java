@@ -16,7 +16,7 @@ public class JdOrderPuller extends OrderPuller {
 
     @Override
     protected List<Order> pull(TimeInterval timeInterval) {
-        System.out.println("拉取京东订单，开始时间：" + timeInterval.getStartTime() + "，结束时间：" + timeInterval.getEndTime() + "。");
+        System.out.println("拉取京东订单，开始时间：" + timeInterval.getStartTime(getPlatform()) + "，结束时间：" + timeInterval.getEndTime(getPlatform()) + "。");
         Order order1 = new Order();
         order1.setId(1000000000001L);
         Goods goods1 = new Goods();
