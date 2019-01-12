@@ -1,9 +1,9 @@
 package com.willowleaf.tmallpull;
 
+import com.willowleaf.commons.model.Goods;
+import com.willowleaf.commons.model.Order;
 import com.willowleaf.orderpull.core.OrderPuller;
 import com.willowleaf.orderpull.core.TimeInterval;
-import com.willowleaf.orderpull.core.model.Goods;
-import com.willowleaf.orderpull.core.model.Order;
 import com.willowleaf.orderpull.core.model.Platform;
 import org.springframework.stereotype.Component;
 
@@ -20,15 +20,15 @@ public class TmallOrderPuller extends OrderPuller {
         System.out.println("拉取天猫订单，开始时间：" + timeInterval.getStartTime(getPlatform()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
                 + "，结束时间：" + timeInterval.getEndTime(getPlatform()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "。");
         Order order1 = new Order();
-        order1.setId(1000000000000001L);
+        order1.setId("TMALL_ORDER-1");
         Goods goods1 = new Goods();
-        goods1.setId(2000000000000001L);
+        goods1.setId("TMALL_GOODS-1");
         order1.setGoods(Collections.singletonList(goods1));
 
         Order order2 = new Order();
-        order2.setId(1000000000000002L);
+        order2.setId("TMALL_ORDER-2");
         Goods goods2 = new Goods();
-        goods2.setId(2000000000000002L);
+        goods2.setId("TMALL_GOODS-2");
         order2.setGoods(Collections.singletonList(goods2));
 
         return Arrays.asList(order1, order2);

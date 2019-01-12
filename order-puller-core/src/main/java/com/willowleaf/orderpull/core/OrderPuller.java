@@ -1,12 +1,11 @@
 package com.willowleaf.orderpull.core;
 
-import com.willowleaf.orderpull.core.data.*;
+import com.willowleaf.commons.model.Order;
+import com.willowleaf.orderpull.core.data.OperationRepository;
 import com.willowleaf.orderpull.core.model.OperationLog;
-import com.willowleaf.orderpull.core.model.Order;
 import com.willowleaf.orderpull.core.model.Platform;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,29 +22,17 @@ public abstract class OrderPuller {
     @Autowired
     protected TimeInterval timeInterval;
     @Autowired
-    protected OrderRepository orderRepository;
-    @Autowired
-    protected GoodsRepository goodsRepository;
-    @Autowired
     protected OperationRepository operationRepository;
 
     /**
-     * 拉取订单数据并保存。
+     * 拉取订单数据并保存拉取日志。
      *
      * @return 订单信息列表
      */
-    @Transactional
-    public List<Order> pullAndSave() {
+    List<Order> pullAndSave() {
         List<Order> orders = pull(timeInterval);
         OperationLog operationLog = new OperationLog(timeInterval.getEndTime(getPlatform()), getPlatform());
         operationRepository.save(operationLog);
-
-        if (orders != null && orders.size() > 0) {
-            orders.forEach(order -> {
-                order.getGoods().forEach(goods -> goodsRepository.save(goods));
-                orderRepository.save(order);
-            });
-        }
         return orders;
     }
 

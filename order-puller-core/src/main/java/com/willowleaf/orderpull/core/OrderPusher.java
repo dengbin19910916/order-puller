@@ -1,6 +1,6 @@
 package com.willowleaf.orderpull.core;
 
-import com.willowleaf.orderpull.core.model.Order;
+import com.willowleaf.commons.model.Order;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Component;
 
