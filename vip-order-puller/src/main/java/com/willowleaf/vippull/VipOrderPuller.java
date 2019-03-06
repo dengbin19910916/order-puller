@@ -1,4 +1,4 @@
-package com.willowleaf.tmallpull;
+package com.willowleaf.vippull;
 
 import com.willowleaf.commons.model.Goods;
 import com.willowleaf.commons.model.Order;
@@ -13,22 +13,22 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class TmallOrderPuller extends OrderPuller {
+public class VipOrderPuller extends OrderPuller {
 
     @Override
     protected List<Order> pull(TimeInterval timeInterval) {
-        System.out.println("拉取天猫订单，开始时间：" + timeInterval.getStartTime(getPlatform()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        System.out.println("拉取唯品会订单，开始时间：" + timeInterval.getStartTime(getPlatform()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
                 + "，结束时间：" + timeInterval.getEndTime(getPlatform()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "。");
         Order order1 = new Order();
-        order1.setId("TMALL_ORDER-1");
+        order1.setId("VIP_ORDER-1");
         Goods goods1 = new Goods();
-        goods1.setId("TMALL_GOODS-1");
+        goods1.setId("VIP_GOODS-1");
         order1.setGoods(Collections.singletonList(goods1));
 
         Order order2 = new Order();
-        order2.setId("TMALL_ORDER-2");
+        order2.setId("VIP_ORDER-2");
         Goods goods2 = new Goods();
-        goods2.setId("TMALL_GOODS-2");
+        goods2.setId("VIP_GOODS-2");
         order2.setGoods(Collections.singletonList(goods2));
 
         return Arrays.asList(order1, order2);
@@ -36,6 +36,6 @@ public class TmallOrderPuller extends OrderPuller {
 
     @Override
     protected Platform getPlatform() {
-        return Platform.ALIBABA;
+        return Platform.VIP;
     }
 }

@@ -9,7 +9,7 @@ spring:
 info:
   version: @project.version@
 server:
-  port: 8081
+  port: 8083
   http2:
     enabled: true
 management:
@@ -19,7 +19,7 @@ management:
         include: "*"
 job:
   pull:
-    job-identity: order-pull-job-tmall
+    job-identity: order-pull-job-vip
     start-time: 2019-01-01T00:00:00
 ---
 spring:
@@ -40,7 +40,7 @@ spring:
     enabled: false
 job:
   pull:
-    time-interval: 10
+    time-interval: 15
 ---
 spring:
   profiles: qa

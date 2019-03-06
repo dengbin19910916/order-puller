@@ -38,6 +38,8 @@
     <modules>
         <module>order-puller-core</module>
         <module>tmall-order-puller</module>
+        <module>jd-order-puller</module>
+        <module>vip-order-puller</module>
     </modules>
 
 </project>

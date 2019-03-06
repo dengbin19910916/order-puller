@@ -14,19 +14,19 @@ import java.time.LocalDateTime;
 @ConfigurationProperties(prefix = "job.pull")
 public class JobProperties {
     /**
-     * The first time to start.
+     * 订单拉取任务的开始时间.
      */
-    private String firstTime;
+    private String startTime;
     /**
-     * Time interval (in seconds), it recommends more than five seconds.
+     * 时间间隔（秒）。
      */
-    private int timeInterval = 5;
+    private int timeInterval = 300;
     /**
-     * Job identity.
+     * 任务名称.
      */
     private String jobIdentity = "order-pull-job";
 
-    public LocalDateTime getFirstTime() {
-        return firstTime == null ? null : LocalDateTime.parse(firstTime);
+    public LocalDateTime getStartTime() {
+        return startTime == null ? null : LocalDateTime.parse(startTime);
     }
 }
