@@ -1,9 +1,9 @@
 package com.willowleaf.vippull;
 
-import com.willowleaf.commons.model.Goods;
-import com.willowleaf.commons.model.Order;
 import com.willowleaf.orderpull.core.OrderPuller;
 import com.willowleaf.orderpull.core.TimeInterval;
+import com.willowleaf.orderpull.core.model.Goods;
+import com.willowleaf.orderpull.core.model.Order;
 import com.willowleaf.orderpull.core.model.Platform;
 import org.springframework.stereotype.Component;
 
