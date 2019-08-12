@@ -18,9 +18,8 @@ management:
       exposure:
         include: "*"
 job:
-  pull:
-    job-identity: order-pull-job-vip
-    start-time: 2019-01-01T00:00:00
+  job-identity: order-pull-job-vip
+  start-time: 2019-01-01 00:00:00
 ---
 spring:
   profiles: dev
@@ -39,8 +38,7 @@ spring:
   liquibase:
     enabled: false
 job:
-  pull:
-    time-interval: 15
+  time-interval: 15
 ---
 spring:
   profiles: qa
@@ -60,5 +58,4 @@ spring:
   liquibase:
     enabled: false
 job:
-  pull:
-    time-interval: 5
+  time-interval: 5

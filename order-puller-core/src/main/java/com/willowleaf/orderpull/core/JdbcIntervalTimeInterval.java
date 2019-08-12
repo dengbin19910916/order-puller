@@ -1,8 +1,8 @@
 package com.willowleaf.orderpull.core;
 
-import com.willowleaf.orderpull.core.model.OperationLog;
 import com.willowleaf.orderpull.core.data.OperationRepository;
-import com.willowleaf.orderpull.core.model.Platform;
+import com.willowleaf.orderpull.core.model.OperationLog;
+import com.willowleaf.orderpull.core.model.Order;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -22,14 +22,14 @@ public class JdbcIntervalTimeInterval implements TimeInterval {
     }
 
     @Override
-    public LocalDateTime getStartTime(Platform platform) {
-        Optional<OperationLog> lastOperation = operationRepository.findLastOperateTime(platform);
+    public LocalDateTime getStartTime(Order.Channel channel) {
+        Optional<OperationLog> lastOperation = operationRepository.findLastOperateTime(channel);
         return lastOperation.isPresent() ? lastOperation.get().getOperationTime() :
-                jobProperties.getStartTime() != null ? jobProperties.getStartTime() : LocalDateTime.now();
+                jobProperties.getStartTime();
     }
 
     @Override
-    public LocalDateTime getEndTime(Platform platform) {
-        return getStartTime(platform).plusSeconds(jobProperties.getTimeInterval());
+    public LocalDateTime getEndTime(Order.Channel channel) {
+        return getStartTime(channel).plusSeconds(jobProperties.getTimeInterval());
     }
 }

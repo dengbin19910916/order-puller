@@ -10,5 +10,12 @@ public class Order implements Serializable {
 
     private String id;
 
-    private List<Goods> goods;
+    private List<Item> items;
+
+    public enum Channel {
+
+        TMALL,
+        JD,
+        VIP
+    }
 }

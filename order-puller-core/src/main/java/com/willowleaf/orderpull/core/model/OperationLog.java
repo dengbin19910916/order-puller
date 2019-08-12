@@ -25,10 +25,10 @@ public class OperationLog implements Serializable {
     private LocalDateTime operationTime;
 
     @Enumerated
-    private Platform platform;
+    private Order.Channel channel;
 
-    public OperationLog(LocalDateTime operationTime, Platform platform) {
+    public OperationLog(LocalDateTime operationTime, Order.Channel channel) {
         this.operationTime = operationTime;
-        this.platform = platform;
+        this.channel = channel;
     }
 }

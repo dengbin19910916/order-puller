@@ -3,7 +3,6 @@ package com.willowleaf.orderpull.core;
 import com.willowleaf.orderpull.core.data.OperationRepository;
 import com.willowleaf.orderpull.core.model.OperationLog;
 import com.willowleaf.orderpull.core.model.Order;
-import com.willowleaf.orderpull.core.model.Platform;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,7 +29,7 @@ public abstract class OrderPuller {
      */
     List<Order> pullAndSave() {
         List<Order> orders = pull(timeInterval);
-        OperationLog operationLog = new OperationLog(timeInterval.getEndTime(getPlatform()), getPlatform());
+        OperationLog operationLog = new OperationLog(timeInterval.getEndTime(getOrderChannel()), getOrderChannel());
         operationRepository.save(operationLog);
         return orders;
     }
@@ -43,5 +42,5 @@ public abstract class OrderPuller {
      */
     protected abstract List<Order> pull(TimeInterval timeInterval);
 
-    protected abstract Platform getPlatform();
+    protected abstract Order.Channel getOrderChannel();
 }

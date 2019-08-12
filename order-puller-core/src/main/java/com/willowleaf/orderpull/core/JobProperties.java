@@ -4,12 +4,13 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 拉取订单任务的配置属性。
  */
 @Data
-@ConfigurationProperties(prefix = "job.pull")
+@ConfigurationProperties(prefix = "job")
 public class JobProperties {
     /**
      * 订单拉取任务的开始时间.
@@ -25,6 +26,7 @@ public class JobProperties {
     private String jobIdentity = "order-pull-job";
 
     public LocalDateTime getStartTime() {
-        return startTime == null ? null : LocalDateTime.parse(startTime);
+        return startTime == null ? LocalDateTime.now()
+                : LocalDateTime.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }
