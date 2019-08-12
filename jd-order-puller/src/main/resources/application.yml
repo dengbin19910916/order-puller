@@ -9,7 +9,7 @@ spring:
 info:
   version: @project.version@
 server:
-  port: 8081
+  port: 8082
   http2:
     enabled: true
 management:
@@ -18,7 +18,7 @@ management:
       exposure:
         include: "*"
 job:
-  job-identity: order-pull-job-tmall
+  job-identity: order-pull-job-jd
   start-time: 2019-01-01 00:00:00
 ---
 spring:
@@ -38,7 +38,7 @@ spring:
   liquibase:
     enabled: false
 job:
-  time-interval: 5
+  time-interval: 10
 ---
 spring:
   profiles: qa
@@ -58,4 +58,4 @@ spring:
   liquibase:
     enabled: false
 job:
-  time-interval: 5
+  time-interval: 10

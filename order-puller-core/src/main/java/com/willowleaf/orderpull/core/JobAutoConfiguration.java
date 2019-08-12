@@ -31,7 +31,7 @@ public class JobAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean(QuartzJobBean.class)
+    @ConditionalOnMissingBean(Job.class)
     public QuartzJobBean quartzJob() {
         return new OrderPullJob(puller, pusher);
     }

@@ -58,4 +58,4 @@ spring:
   liquibase:
     enabled: false
 job:
-  time-interval: 5
+  time-interval: 15
