@@ -7,8 +7,6 @@ import java.time.LocalDateTime;
 /**
  * 拉取线上平台订单的定时器。
  * 确定拉取订单的时间区间[startTime, endTime)。
- *
- * @author dengb
  */
 public interface TimeInterval {
 

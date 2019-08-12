@@ -10,8 +10,6 @@ import static com.willowleaf.orderpull.core.JobAutoConfiguration.ORDER_QUEUE_NAM
 
 /**
  * 将标准订单推送至RabbitMQ。
- *
- * @author dengb
  */
 @Component
 public class OrderPusher {

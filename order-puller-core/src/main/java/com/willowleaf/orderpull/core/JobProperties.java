@@ -7,8 +7,6 @@ import java.time.LocalDateTime;
 
 /**
  * 拉取订单任务的配置属性。
- *
- * @author dengb
  */
 @Data
 @ConfigurationProperties(prefix = "job.pull")

@@ -13,7 +13,6 @@ import java.util.List;
  * 定时拉取平台的订单报文。
  * 由子类实现如何拉取订单报文。
  *
- * @author dengb
  * @see OrderPuller#pull(TimeInterval) 拉取订单报文
  */
 @Getter

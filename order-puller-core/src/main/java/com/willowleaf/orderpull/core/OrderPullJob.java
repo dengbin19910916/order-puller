@@ -8,8 +8,6 @@ import java.util.List;
 
 /**
  * 订单拉取的定时任务。
- *
- * @author dengb
  */
 public class OrderPullJob extends QuartzJobBean {
 

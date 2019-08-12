@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * 拉取订单任务的自动化配置。
- *
- * @author dengb
  */
 @EnableTransactionManagement
 @Configuration

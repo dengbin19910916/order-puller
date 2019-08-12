@@ -9,8 +9,6 @@ import java.util.Optional;
 
 /**
  * 基于数据库实现的定时器。
- *
- * @author dengb
  */
 public class JdbcIntervalTimeInterval implements TimeInterval {
 

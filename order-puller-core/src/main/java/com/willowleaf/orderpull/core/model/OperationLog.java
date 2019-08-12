@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 
 /**
  * 拉取操作的信息。
- *
- * @author dengb
  */
 @Data
 @NoArgsConstructor
