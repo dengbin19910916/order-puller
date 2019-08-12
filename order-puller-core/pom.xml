@@ -10,7 +10,7 @@
     <description>order-puller-core</description>
 
     <parent>
-        <groupId>com.meicloud.paas</groupId>
+        <groupId>com.willowleaf.omni</groupId>
         <artifactId>order-puller</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>

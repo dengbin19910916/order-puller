@@ -11,7 +11,7 @@
     <description>jd-order-puller</description>
 
     <parent>
-        <groupId>com.meicloud.paas</groupId>
+        <groupId>com.willowleaf.omni</groupId>
         <artifactId>order-puller</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
@@ -19,7 +19,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.meicloud.paas</groupId>
+            <groupId>com.willowleaf.omni</groupId>
             <artifactId>order-puller-core</artifactId>
         </dependency>
 
