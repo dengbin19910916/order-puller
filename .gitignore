@@ -23,3 +23,20 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+
+### MacOS ###
+.DS_Store
+jd-order-puller/.DS_Store
+jd-order-puller/src/.DS_Store
+jd-order-puller/src/main/.DS_Store
+jd-order-puller/src/main/java/.DS_Store
+jd-order-puller/src/main/java/com/.DS_Store
+jd-order-puller/src/main/java/com/willowleaf/.DS_Store
+jd-order-puller/src/main/java/com/willowleaf/jdpull/.DS_Store
+jd-order-puller/target/
+order-puller-core/.DS_Store
+order-puller-core/target/
+tmall-order-puller/.DS_Store
+tmall-order-puller/target/
+vip-order-puller/.DS_Store
+vip-order-puller/target/

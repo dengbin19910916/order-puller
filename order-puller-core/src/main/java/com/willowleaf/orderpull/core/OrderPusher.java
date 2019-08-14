@@ -11,7 +11,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
-import static com.willowleaf.orderpull.core.JobAutoConfiguration.ORDER_QUEUE_NAME;
+import static com.willowleaf.orderpull.core.job.JobAutoConfiguration.ORDER_QUEUE_NAME;
 
 /**
  * 将标准订单推送至RabbitMQ。
@@ -26,7 +26,7 @@ public class OrderPusher implements RabbitTemplate.ConfirmCallback, RabbitTempla
         this.amqpTemplate = amqpTemplate;
     }
 
-    void push(List<Order> orders) {
+    public void push(List<Order> orders) {
         if (!ObjectUtils.isEmpty(orders)) {
             amqpTemplate.convertAndSend(ORDER_QUEUE_NAME, orders);
         }

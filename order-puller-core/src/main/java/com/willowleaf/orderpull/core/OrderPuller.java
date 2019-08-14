@@ -27,7 +27,7 @@ public abstract class OrderPuller {
      *
      * @return 订单信息列表
      */
-    List<Order> pullAndSave() {
+    public List<Order> pullAndSave() {
         List<Order> orders = pull(timeInterval);
         OperationLog operationLog = new OperationLog(timeInterval.getEndTime(getOrderChannel()), getOrderChannel());
         operationRepository.save(operationLog);
@@ -42,5 +42,10 @@ public abstract class OrderPuller {
      */
     protected abstract List<Order> pull(TimeInterval timeInterval);
 
+    /**
+     * 返回订单的来源渠道。
+     *
+     * @return 渠道类型
+     */
     protected abstract Order.Channel getOrderChannel();
 }

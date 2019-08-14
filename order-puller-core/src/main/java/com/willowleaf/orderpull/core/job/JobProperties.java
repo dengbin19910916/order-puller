@@ -1,4 +1,4 @@
-package com.willowleaf.orderpull.core;
+package com.willowleaf.orderpull.core.job;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

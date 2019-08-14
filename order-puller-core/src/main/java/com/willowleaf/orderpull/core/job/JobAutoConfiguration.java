@@ -1,5 +1,8 @@
-package com.willowleaf.orderpull.core;
+package com.willowleaf.orderpull.core.job;
 
+import com.willowleaf.orderpull.core.OrderPuller;
+import com.willowleaf.orderpull.core.OrderPusher;
+import com.willowleaf.orderpull.core.TimeInterval;
 import com.willowleaf.orderpull.core.data.OperationRepository;
 import org.quartz.*;
 import org.springframework.amqp.core.Queue;
@@ -31,8 +34,8 @@ public class JobAutoConfiguration {
     }
 
     @Bean
-    @ConditionalOnMissingBean(Job.class)
-    public QuartzJobBean quartzJob() {
+    @ConditionalOnMissingBean(value = Job.class, name = "orderPullJob")
+    public QuartzJobBean orderPullJob() {
         return new OrderPullJob(puller, pusher);
     }
 
@@ -67,5 +70,5 @@ public class JobAutoConfiguration {
         return new Queue(ORDER_QUEUE_NAME, true);
     }
 
-    static final String ORDER_QUEUE_NAME = "order";
+    public static final String ORDER_QUEUE_NAME = "order";
 }

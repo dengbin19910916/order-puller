@@ -1,5 +1,6 @@
-package com.willowleaf.orderpull.core;
+package com.willowleaf.orderpull.core.job;
 
+import com.willowleaf.orderpull.core.TimeInterval;
 import com.willowleaf.orderpull.core.data.OperationRepository;
 import com.willowleaf.orderpull.core.model.OperationLog;
 import com.willowleaf.orderpull.core.model.Order;

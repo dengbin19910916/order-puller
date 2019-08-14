@@ -1,5 +1,7 @@
-package com.willowleaf.orderpull.core;
+package com.willowleaf.orderpull.core.job;
 
+import com.willowleaf.orderpull.core.OrderPuller;
+import com.willowleaf.orderpull.core.OrderPusher;
 import com.willowleaf.orderpull.core.model.Order;
 import org.quartz.JobExecutionContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
