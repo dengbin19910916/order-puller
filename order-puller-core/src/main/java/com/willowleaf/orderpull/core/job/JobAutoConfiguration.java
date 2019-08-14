@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import java.util.UUID;
+
 /**
  * 拉取订单任务的自动化配置。
  */
@@ -21,14 +23,14 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableConfigurationProperties(JobProperties.class)
 public class JobAutoConfiguration {
 
-    private final JobProperties properties;
+    private final JobProperties jobProperties;
     private final OrderPuller puller;
     private final OrderPusher pusher;
 
-    public JobAutoConfiguration(JobProperties properties,
+    public JobAutoConfiguration(JobProperties jobProperties,
                                 OrderPuller puller,
                                 OrderPusher pusher) {
-        this.properties = properties;
+        this.jobProperties = jobProperties;
         this.puller = puller;
         this.pusher = pusher;
     }
@@ -40,9 +42,12 @@ public class JobAutoConfiguration {
     }
 
     @Bean
-    public JobDetail jobDetail(QuartzJobBean quartzJob) {
+    public JobDetail jobDetail(QuartzJobBean quartzJob, TimeInterval timeInterval) {
+        JobDataMap jobDataMap = new JobDataMap();
+        jobDataMap.put("strategy", new OrderPuller.Strategy(timeInterval, 0, jobProperties.getSize()));
         return JobBuilder.newJob(quartzJob.getClass())
-                .withIdentity(properties.getJobIdentity())
+                .withIdentity(getIdentity())
+                .usingJobData(jobDataMap)
                 .storeDurably()
                 .build();
     }
@@ -50,19 +55,25 @@ public class JobAutoConfiguration {
     @Bean
     public Trigger trigger(JobDetail jobDetail) {
         SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
-                .withIntervalInSeconds(properties.getTimeInterval())
+                .withIntervalInSeconds(jobProperties.getTimeInterval())
                 .repeatForever();
         return TriggerBuilder.newTrigger()
                 .forJob(jobDetail)
-                .withIdentity(properties.getJobIdentity())
+                .withIdentity(getIdentity())
                 .withSchedule(scheduleBuilder)
                 .build();
     }
 
+    private String getIdentity() {
+        return jobProperties.getJobIdentity() == null
+                ? UUID.randomUUID().toString().replaceAll("-", "")
+                : jobProperties.getJobIdentity();
+    }
+
     @Bean
     @ConditionalOnMissingBean(TimeInterval.class)
-    public TimeInterval timer(OperationRepository operationRepository, JobProperties jobProperties) {
-        return new JdbcIntervalTimeInterval(operationRepository, jobProperties);
+    public TimeInterval timeInterval(OperationRepository operationRepository, JobProperties jobProperties) {
+        return new JdbcTimeInterval(operationRepository, jobProperties);
     }
 
     @Bean
@@ -70,5 +81,8 @@ public class JobAutoConfiguration {
         return new Queue(ORDER_QUEUE_NAME, true);
     }
 
+    /**
+     * 消息Queue的名字
+     */
     public static final String ORDER_QUEUE_NAME = "order";
 }

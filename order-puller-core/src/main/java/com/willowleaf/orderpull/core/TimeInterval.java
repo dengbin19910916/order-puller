@@ -5,20 +5,19 @@ import com.willowleaf.orderpull.core.model.Order;
 import java.time.LocalDateTime;
 
 /**
- * 拉取线上平台订单的定时器。
- * 确定拉取订单的时间区间[startTime, endTime)。
+ * 拉取订单所使用的策略。
  */
 public interface TimeInterval {
 
     /**
-     * 返回时间区间的前端点。
+     * 返回开始时间，时间区间[startTime, endTime)。
      *
      * @return 开始时间，包含
      */
     LocalDateTime getStartTime(Order.Channel channel);
 
     /**
-     * 返回时间区间的后端点。
+     * 返回结束时间，时间区间[startTime, endTime)。
      *
      * @return 结束时间，不包含
      */

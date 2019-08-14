@@ -2,7 +2,11 @@ package com.willowleaf.orderpull.core.job;
 
 import com.willowleaf.orderpull.core.OrderPuller;
 import com.willowleaf.orderpull.core.OrderPusher;
+import com.willowleaf.orderpull.core.TimeInterval;
 import com.willowleaf.orderpull.core.model.Order;
+import org.quartz.Job;
+import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
@@ -23,8 +27,9 @@ public class OrderPullJob extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) {
-        List<Order> orders = puller.pullAndSave();
-
+        JobDataMap jobDataMap = jobExecutionContext.getMergedJobDataMap();
+        OrderPuller.Strategy strategy = (OrderPuller.Strategy) jobDataMap.get("strategy");
+        List<Order> orders = puller.pullAndSave(strategy);
         pusher.push(orders);
     }
 }

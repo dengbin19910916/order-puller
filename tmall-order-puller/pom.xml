@@ -19,6 +19,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.8</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.willowleaf.omni</groupId>
             <artifactId>order-puller-core</artifactId>
         </dependency>

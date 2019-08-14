@@ -11,13 +11,13 @@ import java.util.Optional;
 /**
  * 基于数据库实现的定时器。
  */
-public class JdbcIntervalTimeInterval implements TimeInterval {
+public class JdbcTimeInterval implements TimeInterval {
 
     private final OperationRepository operationRepository;
     private final JobProperties jobProperties;
 
-    JdbcIntervalTimeInterval(OperationRepository operationRepository,
-                             JobProperties jobProperties) {
+    JdbcTimeInterval(OperationRepository operationRepository,
+                     JobProperties jobProperties) {
         this.operationRepository = operationRepository;
         this.jobProperties = jobProperties;
     }

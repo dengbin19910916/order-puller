@@ -4,6 +4,7 @@ import com.willowleaf.orderpull.core.OrderPuller;
 import com.willowleaf.orderpull.core.TimeInterval;
 import com.willowleaf.orderpull.core.model.Item;
 import com.willowleaf.orderpull.core.model.Order;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.format.DateTimeFormatter;
@@ -11,13 +12,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Component
 public class VipOrderPuller extends OrderPuller {
 
     @Override
-    protected List<Order> pull(TimeInterval timeInterval) {
-        System.out.println("拉取唯品会订单，开始时间：" + timeInterval.getStartTime(getOrderChannel()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                + "，结束时间：" + timeInterval.getEndTime(getOrderChannel()).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "。");
+    protected List<Order> pull(Strategy strategy) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        log.info("拉取天猫订单：开始时间[{}]，结束时间[{}]，第{}页，{}条数据。",
+                strategy.getTimeInterval().getStartTime(getOrderChannel()).format(formatter),
+                strategy.getTimeInterval().getEndTime(getOrderChannel()).format(formatter),
+                strategy.getPage() + 1, strategy.getSize());
         Order order1 = new Order();
         order1.setId("VIP_ORDER-1");
         Item item1 = new Item();

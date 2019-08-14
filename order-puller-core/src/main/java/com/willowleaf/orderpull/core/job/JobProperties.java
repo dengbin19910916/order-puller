@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 @ConfigurationProperties(prefix = "job")
 public class JobProperties {
     /**
-     * 订单拉取任务的开始时间.
+     * 订单拉取任务的开始时间。
      */
     private String startTime;
     /**
@@ -21,9 +21,13 @@ public class JobProperties {
      */
     private int timeInterval = 300;
     /**
-     * 任务名称.
+     * 任务名称。
      */
-    private String jobIdentity = "order-pull-job";
+    private String jobIdentity;
+    /**
+     * 每次拉取的条目数。
+     */
+    private int size = 100;
 
     public LocalDateTime getStartTime() {
         return startTime == null ? LocalDateTime.now()

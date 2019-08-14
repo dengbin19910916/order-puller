@@ -14,6 +14,8 @@ public interface OperationRepository extends JpaRepository<OperationLog, Long> {
      *
      * @return 操作信息，可能为空
      */
-    @Query("select o from OperationLog o where o.operationTime = (select max(operationTime) from OperationLog where channel = ?1) and o.channel = ?1")
+    @Query("select o from OperationLog o " +
+            "where o.operationTime = (select max(operationTime) from OperationLog where channel = ?1) " +
+            "and o.channel = ?1")
     Optional<OperationLog> findLastOperateTime(Order.Channel channel);
 }

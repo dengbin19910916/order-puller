@@ -1,9 +1,9 @@
 package com.willowleaf.jdpull;
 
 import com.willowleaf.orderpull.core.OrderPuller;
-import com.willowleaf.orderpull.core.TimeInterval;
 import com.willowleaf.orderpull.core.model.Item;
 import com.willowleaf.orderpull.core.model.Order;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.format.DateTimeFormatter;
@@ -11,14 +11,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@Slf4j
 @Component
 public class JdOrderPuller extends OrderPuller {
 
     @Override
-    protected List<Order> pull(TimeInterval timeInterval) {
+    protected List<Order> pull(Strategy strategy) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        System.out.println("拉取京东订单，开始时间：" + timeInterval.getStartTime(getOrderChannel()).format(formatter)
-                + "，结束时间：" + timeInterval.getEndTime(getOrderChannel()).format(formatter) + "。");
+        log.info("拉取京东订单：开始时间[{}]，结束时间[{}]，第{}页，{}条数据。",
+                strategy.getTimeInterval().getStartTime(getOrderChannel()).format(formatter),
+                strategy.getTimeInterval().getEndTime(getOrderChannel()).format(formatter),
+                strategy.getPage() + 1, strategy.getSize());
         Order order1 = new Order();
         order1.setId("JD_ORDER-1");
         Item item1 = new Item();
