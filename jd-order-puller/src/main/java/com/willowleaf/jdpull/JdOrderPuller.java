@@ -8,10 +8,14 @@ import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Component
 public class JdOrderPuller extends OrderPuller {
+
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public Order.Channel getOrderChannel() {
@@ -22,6 +26,7 @@ public class JdOrderPuller extends OrderPuller {
     protected Order mapOrder(ResultSet rs) throws SQLException {
         Order order = new Order();
         order.setId(rs.getLong("id"));
+        order.setCreatedTime(LocalDateTime.parse(rs.getString("created_time"), formatter));
         return order;
     }
 
