@@ -9,12 +9,10 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.QuartzJobBean;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * 拉取订单任务的自动化配置。
  */
-@EnableTransactionManagement
 @Configuration
 @EnableConfigurationProperties(JobProperties.class)
 public class JobAutoConfiguration {
