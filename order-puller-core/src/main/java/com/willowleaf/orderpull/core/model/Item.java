@@ -7,7 +7,11 @@ import java.io.Serializable;
 @Data
 public class Item implements Serializable {
 
-    private String id;
+    private Long id;
+
+    private Long orderId;
 
     private String name;
+
+    private Integer count;
 }

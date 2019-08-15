@@ -20,6 +20,8 @@ management:
 job:
   job-identity: order-pull-job-jd
   start-time: 2019-01-01 00:00:00
+  order-table-name: t_order
+  item-table-name: t_item
 ---
 spring:
   profiles: dev

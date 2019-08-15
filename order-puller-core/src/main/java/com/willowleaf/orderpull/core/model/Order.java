@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class Order implements Serializable {
 
-    private String id;
+    private Long id;
 
     private List<Item> items;
 

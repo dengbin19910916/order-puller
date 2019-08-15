@@ -2,6 +2,7 @@ package com.willowleaf.orderpull.core.job;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +13,15 @@ import java.time.format.DateTimeFormatter;
 @Data
 @ConfigurationProperties(prefix = "job")
 public class JobProperties {
+
+    /**
+     * 订单表名。
+     */
+    private String orderTableName;
+    /**
+     * 订单明细表名。
+     */
+    private String itemTableName;
     /**
      * 订单拉取任务的开始时间。
      */
@@ -34,7 +44,7 @@ public class JobProperties {
     private int size = 100;
 
     public LocalDateTime getStartTime() {
-        return startTime == null ? LocalDateTime.now()
+        return ObjectUtils.isEmpty(startTime) ? LocalDateTime.now()
                 : LocalDateTime.parse(startTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }

@@ -19,7 +19,9 @@ management:
         include: "*"
 job:
   job-identity: order-pull-job-tmall
-  start-time: 2019-01-01 00:00:00
+  start-time: 2019-08-15 16:58:10
+  order-table-name: t_order
+  item-table-name: t_item
 ---
 spring:
   profiles: dev
