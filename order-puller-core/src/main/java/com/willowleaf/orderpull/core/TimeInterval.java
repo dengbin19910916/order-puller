@@ -5,7 +5,7 @@ import com.willowleaf.orderpull.core.model.Order;
 import java.time.LocalDateTime;
 
 /**
- * 拉取订单所使用的策略。
+ * 拉取订单的时间区间。
  */
 public interface TimeInterval {
 
