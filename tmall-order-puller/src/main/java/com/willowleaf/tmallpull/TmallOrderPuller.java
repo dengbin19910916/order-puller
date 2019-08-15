@@ -34,4 +34,9 @@ public class TmallOrderPuller extends OrderPuller {
         item.setCount(rs.getInt("count"));
         return item;
     }
+
+    @Override
+    protected void processData(Order order) {
+        System.out.println(order);
+    }
 }

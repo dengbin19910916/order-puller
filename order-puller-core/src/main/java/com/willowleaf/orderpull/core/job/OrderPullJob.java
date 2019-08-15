@@ -21,6 +21,6 @@ public class OrderPullJob extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) {
-        puller.pullAndProcess(System.out::println);
+        puller.pullAndProcess();
     }
 }

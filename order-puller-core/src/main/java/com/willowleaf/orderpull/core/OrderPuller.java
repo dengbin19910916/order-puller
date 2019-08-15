@@ -13,13 +13,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * 定时拉取平台的订单报文。
  * 由子类实现如何拉取订单报文。
  *
- * @see OrderPuller#pullAndProcess(TimeInterval, Consumer) 拉取订单报文
+ * @see OrderPuller#pullAndProcess() 拉取订单报文
  */
 @Slf4j
 public abstract class OrderPuller {
@@ -36,7 +35,7 @@ public abstract class OrderPuller {
     /**
      * 拉取订单数据并保存拉取日志。
      */
-    public void pullAndProcess(Consumer<Order> consumer) {
+    public void pullAndProcess() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         String startTime = timeInterval.getStartTime(getOrderChannel()).format(formatter);
@@ -54,7 +53,7 @@ public abstract class OrderPuller {
 
                     Order order = mapOrder(orderRS);
                     order.setItems(items);
-                    consumer.accept(order);
+                    processData(order);
                 });
 
         OperationLog operationLog = new OperationLog(timeInterval.getEndTime(getOrderChannel()), getOrderChannel());
@@ -85,4 +84,11 @@ public abstract class OrderPuller {
      * @throws SQLException 不用捕获SQL异常
      */
     protected abstract Item mapItem(ResultSet rs, int rowNum) throws SQLException;
+
+    /**
+     * 处理订单数据。
+     *
+     * @param order 订单信息
+     */
+    protected abstract void processData(Order order);
 }
