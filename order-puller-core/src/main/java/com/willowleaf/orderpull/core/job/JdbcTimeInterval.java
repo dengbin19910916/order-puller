@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
- * 基于数据库实现的定时器。
+ * 基于数据库实现的时间区间。
  */
 public class JdbcTimeInterval implements TimeInterval {
 
