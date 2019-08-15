@@ -27,6 +27,8 @@ public class OperationLog implements Serializable {
     @Enumerated
     private Order.Channel channel;
 
+    private int totalPages;
+
     private int pageNumber;
 
     private int pageSize;
@@ -35,13 +37,14 @@ public class OperationLog implements Serializable {
 
     public OperationLog(LocalDateTime operationTime,
                         Order.Channel channel,
+                        int totalPages,
                         int pageNumber,
-                        int pageSize,
-                        String message) {
+                        int pageSize) {
         this.operationTime = operationTime;
         this.channel = channel;
+        this.totalPages = totalPages;
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
-        this.message = message;
     }
+
 }

@@ -9,6 +9,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 import static com.willowleaf.orderpull.core.job.JobAutoConfiguration.ORDER_QUEUE_NAME;
@@ -26,7 +27,7 @@ public class OrderPusher implements RabbitTemplate.ConfirmCallback, RabbitTempla
         this.amqpTemplate = amqpTemplate;
     }
 
-    public void push(List<Order> orders) {
+    public void push(List<?> orders) {
         if (!ObjectUtils.isEmpty(orders)) {
             amqpTemplate.convertAndSend(ORDER_QUEUE_NAME, orders);
         }

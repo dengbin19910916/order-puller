@@ -23,7 +23,11 @@ public class JobProperties {
     /**
      * 任务名称。
      */
-    private String jobIdentity;
+    private String jobIdentity = "order-pull-job";
+    /**
+     * 触发器名称。
+     */
+    private String triggerIdentity = "order-pull-trigger";
     /**
      * 每次拉取的条目数。
      */

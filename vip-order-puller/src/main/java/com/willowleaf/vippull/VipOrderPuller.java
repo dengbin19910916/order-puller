@@ -14,14 +14,24 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class VipOrderPuller extends OrderPuller {
+public class VipOrderPuller extends OrderPuller<Order> {
 
     @Override
-    protected List<Order> pull(Strategy strategy) {
+    public Order.Channel getOrderChannel() {
+        return Order.Channel.VIP;
+    }
+
+    @Override
+    protected int getTotalPages() {
+        return 0;
+    }
+
+    @Override
+    protected List<Order> getData(Strategy strategy) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         log.info("拉取天猫订单：开始时间[{}]，结束时间[{}]，第{}页，{}条数据。",
-                strategy.getTimeInterval().getStartTime(getOrderChannel()).format(formatter),
-                strategy.getTimeInterval().getEndTime(getOrderChannel()).format(formatter),
+                strategy.getStartTime().format(formatter),
+                strategy.getEndTime().format(formatter),
                 strategy.getPage() + 1, strategy.getSize());
         Order order1 = new Order();
         order1.setId("VIP_ORDER-1");
@@ -36,10 +46,5 @@ public class VipOrderPuller extends OrderPuller {
         order2.setItems(Collections.singletonList(item2));
 
         return Arrays.asList(order1, order2);
-    }
-
-    @Override
-    protected Order.Channel getOrderChannel() {
-        return Order.Channel.VIP;
     }
 }

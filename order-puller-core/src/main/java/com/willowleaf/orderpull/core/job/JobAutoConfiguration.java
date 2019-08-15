@@ -42,32 +42,28 @@ public class JobAutoConfiguration {
     }
 
     @Bean
-    public JobDetail jobDetail(QuartzJobBean quartzJob, TimeInterval timeInterval) {
-        JobDataMap jobDataMap = new JobDataMap();
-        jobDataMap.put("strategy", new OrderPuller.Strategy(timeInterval, 0, jobProperties.getSize()));
+    public JobDetail jobDetail(QuartzJobBean quartzJob) {
         return JobBuilder.newJob(quartzJob.getClass())
-                .withIdentity(getIdentity())
-                .usingJobData(jobDataMap)
+                .withIdentity(jobProperties.getJobIdentity())
                 .storeDurably()
                 .build();
     }
 
     @Bean
-    public Trigger trigger(JobDetail jobDetail) {
-        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
-                .withIntervalInSeconds(jobProperties.getTimeInterval())
-                .repeatForever();
+    public Trigger trigger(JobDetail jobDetail, TimeInterval timeInterval) {
+        JobDataMap jobDataMap = new JobDataMap();
+        jobDataMap.put("strategy", new OrderPuller.Strategy(timeInterval, jobProperties.getSize()));
+
         return TriggerBuilder.newTrigger()
                 .forJob(jobDetail)
-                .withIdentity(getIdentity())
-                .withSchedule(scheduleBuilder)
+                .withIdentity(jobProperties.getTriggerIdentity())
+                .usingJobData(jobDataMap)
+                .withSchedule(
+                        SimpleScheduleBuilder.simpleSchedule()
+                                .withIntervalInSeconds(jobProperties.getTimeInterval())
+                                .repeatForever()
+                )
                 .build();
-    }
-
-    private String getIdentity() {
-        return jobProperties.getJobIdentity() == null
-                ? UUID.randomUUID().toString().replaceAll("-", "")
-                : jobProperties.getJobIdentity();
     }
 
     @Bean
