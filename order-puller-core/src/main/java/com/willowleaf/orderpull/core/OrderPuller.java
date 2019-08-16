@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -32,32 +33,24 @@ public abstract class OrderPuller {
     @Autowired
     protected OperationRepository operationRepository;
 
+    protected DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     /**
      * 拉取订单数据并保存拉取日志。
      */
     public void pullAndProcess() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        String startTime = timeInterval.getStartTime(getOrderChannel()).format(formatter);
-        String endTime = timeInterval.getEndTime(getOrderChannel()).format(formatter);
+        LocalDateTime startTime = timeInterval.getStartTime(getOrderChannel());
+        LocalDateTime endTime = timeInterval.getEndTime(getOrderChannel());
         log.info("拉取{}订单信息 [{} - {})", getOrderChannel().getName(), startTime, endTime);
 
-        jdbcTemplate.setFetchSize(Integer.MIN_VALUE);
-        jdbcTemplate.query("select * from " + jobProperties.getOrderTableName()
-                        + " where created_time >= '" + startTime
-                        + "' and created_time < '" + endTime + "'",
-                orderRS -> {
-                    List<Item> items = jdbcTemplate.query("select * from " + jobProperties.getItemTableName() +
-                                    " where order_id = " + orderRS.getLong("id"),
-                            this::mapItem);
+        pullAndProcess(startTime, endTime, jobProperties.getSize(), this::processData);
 
-                    Order order = mapOrder(orderRS);
-                    order.setItems(items);
-                    processData(order);
-                });
-
-        OperationLog operationLog = new OperationLog(timeInterval.getEndTime(getOrderChannel()), getOrderChannel());
+        OperationLog operationLog = new OperationLog(endTime, getOrderChannel());
         operationRepository.save(operationLog);
+    }
+
+    protected void pullAndProcess(LocalDateTime startTime, LocalDateTime endTime, int pageSize, Processor processor) {
+        pullData(startTime, endTime, pageSize).parallelStream().forEach(processor::process);
     }
 
     /**
@@ -85,10 +78,22 @@ public abstract class OrderPuller {
      */
     protected abstract Item mapItem(ResultSet rs, int rowNum) throws SQLException;
 
+    protected abstract List<Order> pullData(LocalDateTime startTime, LocalDateTime endTime, int pageSize);
+
     /**
      * 处理订单数据。
      *
      * @param order 订单信息
      */
     protected abstract void processData(Order order);
+
+    @FunctionalInterface
+    public interface Processor {
+        /**
+         * 处理订单数据。
+         *
+         * @param order 订单信息
+         */
+        void process(Order order);
+    }
 }

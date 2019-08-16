@@ -9,13 +9,11 @@ import org.springframework.stereotype.Component;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Slf4j
 @Component
 public class TmallOrderPuller extends OrderPuller {
-
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public Order.Channel getOrderChannel() {
@@ -38,6 +36,23 @@ public class TmallOrderPuller extends OrderPuller {
         item.setName(rs.getString("name"));
         item.setCount(rs.getInt("count"));
         return item;
+    }
+
+    @Override
+    protected List<Order> pullData(LocalDateTime startTime, LocalDateTime endTime, int pageSize) {
+        jdbcTemplate.setFetchSize(Integer.MIN_VALUE);
+        return jdbcTemplate.query("select * from " + jobProperties.getOrderTable()
+                        + " where created_time >= '" + startTime.format(formatter)
+                        + "' and created_time < '" + endTime.format(formatter) + "'",
+                (rs, rowNum) -> {
+                    List<Item> items = jdbcTemplate.query("select * from " + jobProperties.getItemTable() +
+                                    " where order_id = " + rs.getLong("id"),
+                            this::mapItem);
+
+                    Order order = mapOrder(rs);
+                    order.setItems(items);
+                    return order;
+                });
     }
 
     @Override

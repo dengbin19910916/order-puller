@@ -19,8 +19,8 @@ management:
         include: "*"
 job:
   start-time: 2019-08-15 17:20:06
-  order-table-name: t_order
-  item-table-name: t_item
+  order-table: t_order
+  item-table: t_item
 ---
 spring:
   profiles: dev

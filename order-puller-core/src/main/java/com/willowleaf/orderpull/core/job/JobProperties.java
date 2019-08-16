@@ -17,11 +17,11 @@ public class JobProperties {
     /**
      * 订单表名。
      */
-    private String orderTableName;
+    private String orderTable;
     /**
      * 订单明细表名。
      */
-    private String itemTableName;
+    private String itemTable;
     /**
      * 订单拉取任务的开始时间。
      */
